@@ -2,13 +2,13 @@
 
 mnist_reader gives a simple and easy way to read and store the mnist database in C++.
 
-Mnist is a database of hand writing numbers use to test and improve image recognition programs.
+Mnist is a database of hand writing numbers used to test and improve image recognition programs.
 
 Download the database at : http://yann.lecun.com/exdb/mnist/
 
 ### How to use it
 
-Download the [sources](sources/) here and add to your code :
+Download the [sources](sources/) here and add the following line to your code :
 ```c++
 #include "mnist_reader.hpp"
 ```
@@ -24,7 +24,7 @@ reader.getData(n_data,n_pixel);
 ```
 To get the n_pixel pixel of the n_data data of the database.
 
-You can see other examples of use in the [example](examples/) section.
+You can see other examples of use in the [examples](examples/) section.
 
 ### Notes
 
@@ -32,7 +32,7 @@ Since the bytes in the Mnist database are writen in big endian, the mnist_reader
 
 ### Contact
 
-If you find any bug or issues using the code, feel free to send me an email at :
+If you find any bugs or issues using the code, feel free to send me an email at :
 quentinp.dev@gmail.com
 
 ### Licence
