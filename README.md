@@ -8,7 +8,7 @@ http://yann.lecun.com/exdb/mnist/
 ### How to use it
 
 Download the [sources](sources/) here and add to your code :
-''' c++
+'''
 #include "mnist_reader.hpp"
 '''
 
