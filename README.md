@@ -8,9 +8,9 @@ http://yann.lecun.com/exdb/mnist/
 ### How to use it
 
 Download the [sources](sources/) here and add to your code :
-'''
+```
 #include "mnist_reader.hpp"
-'''
+```
 
 Then you can simply load the database with :
 ''' c++
