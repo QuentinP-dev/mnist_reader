@@ -14,14 +14,14 @@ Download the [sources](sources/) here and add to your code :
 ```
 
 Then you can simply load the database with :
-''' c++
+```c++
 MnistReader reader(path_to_training_dataset,path_to_training_labels,path_to_test_dataset,path_to_test_labels,true);
-'''
+```
 
 And use it with :
-''' c++
+```c++
 reader.getData(n_data,n_pixel);
-'''
+```
 To get the n_pixel pixel of the n_data data of the database.
 
 You can see other examples of use in the [example](examples/) section.
