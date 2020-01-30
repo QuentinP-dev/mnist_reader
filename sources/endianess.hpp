@@ -38,7 +38,8 @@ Endianess getComputerEndianess()
 }
 
 /** change a numeric variable to the opposit endianess **/
-template<typename T> T changeEndianess(T var)
+template<typename T>
+T changeEndianess(T var)
 {
     //cp the var to an union to cut it into bytes
     union {T _full; char _bytes[sizeof(T)];} uvar={var};
