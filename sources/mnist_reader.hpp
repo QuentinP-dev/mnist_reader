@@ -29,13 +29,13 @@ class MnistReader
 {
 private:
 
-    /**paths to the label and data files **/
+    	/**paths to the label and data files **/
 	std::string _pathToTestDataset;
 	std::string _pathToTrainingDataset;
 	std::string _pathToTestLabels;
 	std::string _pathToTrainingLabels;
 
-    /** the 2 dataset **/
+    	/** the 2 dataset **/
 	std::vector<std::vector<unsigned char>> _dtrain, _dtest;
 
 	/** the 2 labelset **/
