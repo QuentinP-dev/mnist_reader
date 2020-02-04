@@ -1,7 +1,8 @@
-#include "mnist_reader.hpp"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+
+#include "../include/mnist_reader/mnist_reader.hpp"
 
 int main()
 {

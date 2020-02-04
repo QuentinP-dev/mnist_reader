@@ -22,8 +22,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "mnist_reader.hpp"
-#include "endianess.hpp"
+#include "../include/mnist_reader/mnist_reader.hpp"
+#include "../include/system/endianess.hpp"
 
 /** ----- private ----- **/
 
