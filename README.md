@@ -18,7 +18,7 @@ git clone https://github.com/QuentinP-dev/mnist_reader.git
 
 #### 2. Add the library to your project
 
-You can used the mnist_reader library in two different way.
+You can used the mnist_reader library in two different ways.
 
 ##### a. Use directly the source files
 
@@ -29,12 +29,14 @@ And add [src/mnist_reader.cpp](/src/mnist_reader.cpp) at the list of sources you
 ##### b. Compile and link the libmnist_reader.a static library
 
 Use the CMakeList.txt to create the libmnist_reader.a library :
+
 *(example for a Unix system)*
 ```
 cmake -G Unix\ Makefiles
 make
 ```
 Put the created library in your project folder.
+
 And add libmnist_reader.a at the list of sources you give to your compiler.
 
 #### 3. In your code
