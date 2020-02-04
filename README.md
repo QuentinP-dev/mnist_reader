@@ -8,9 +8,38 @@ Download the database at : http://yann.lecun.com/exdb/mnist/
 
 ### How to use it
 
-Download the [sources](sources/) here and add the following line to your code :
+##### 1. Download the repositorie
+
+Download the repositorie with your browser or with git using :
+
+```
+git clone https://github.com/QuentinP-dev/mnist_reader.git
+```
+
+##### 2. Add the library to your project
+
+####### a. Use directly the source files
+
+Put the [include](/include) and the [src](/src) folders in your project folder.
+And add src/mnist_reader.cpp at the list of sources you give to your compiler.
+
+####### b. Compile and link the libmnist_reader.a static library
+
+Use the CMakeList.txt to create the libmnist_reader.a library :
+*(example for a Unix system)*
+```
+cmake -G Unix\ Makefiles
+make
+```
+Put the created library in your project folder.
+And add libmnist_reader.a at the list of sources you give to your compiler.
+
+##### 3. In your code
+
+Include the library with :
+
 ```c++
-#include "mnist_reader.hpp"
+#include "include/mnist_reader/mnist_reader.hpp"
 ```
 
 Then you can simply load the database with :
