@@ -6,9 +6,9 @@ Mnist is a database of hand writing numbers used to test and improve image recog
 
 Download the database at : http://yann.lecun.com/exdb/mnist/
 
-### How to use it
+## How to use it
 
-##### 1. Download the repositorie
+#### 1. Download the repositorie
 
 Download the repositorie with your browser or with git using :
 
@@ -16,14 +16,17 @@ Download the repositorie with your browser or with git using :
 git clone https://github.com/QuentinP-dev/mnist_reader.git
 ```
 
-##### 2. Add the library to your project
+#### 2. Add the library to your project
 
-####### a. Use directly the source files
+You can used the mnist_reader library in two different way.
+
+##### a. Use directly the source files
 
 Put the [include](/include) and the [src](/src) folders in your project folder.
-And add src/mnist_reader.cpp at the list of sources you give to your compiler.
 
-####### b. Compile and link the libmnist_reader.a static library
+And add [src/mnist_reader.cpp](/src/mnist_reader.cpp) at the list of sources you give to your compiler.
+
+##### b. Compile and link the libmnist_reader.a static library
 
 Use the CMakeList.txt to create the libmnist_reader.a library :
 *(example for a Unix system)*
@@ -34,7 +37,7 @@ make
 Put the created library in your project folder.
 And add libmnist_reader.a at the list of sources you give to your compiler.
 
-##### 3. In your code
+#### 3. In your code
 
 Include the library with :
 
@@ -55,16 +58,16 @@ To get the n_pixel pixel of the n_data data of the database.
 
 You can see other examples of use in the [examples](examples/) section.
 
-### Notes
+## Notes
 
-Since the bytes in the Mnist database are writen in big endian, the mnist_reader use an endianess.hpp file to convert the database in little endian.
+Since the bytes in the Mnist database are writen in big endian, the mnist_reader library use an [endianess.hpp](/include/system/endianess.hpp) file to convert the database in little endian.
 
-### Contact
+## Contact
 
 If you find any bugs or issues using the code, feel free to send me an email at :
 quentinp.dev@gmail.com
 
-### Licence
+## Licence
 
 GNU GENERAL PUBLIC LICENSE
 
