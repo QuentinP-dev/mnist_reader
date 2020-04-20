@@ -40,7 +40,7 @@ make
 ```
 The output library will be in build/src/
 
-You can pass option to the cmake command using -D (see man cmake)
+You can pass options to the cmake command using -D (see man cmake)
 
 Option | meaning | default value
 ------ | ------- | -------------
