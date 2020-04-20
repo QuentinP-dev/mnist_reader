@@ -1,7 +1,5 @@
-
-
 //********************************************************************
-// mnist_reader gives an easy way to read and managedthe mnist database	
+// mnist_reader.cpp implement the class defined in mnist_reader.hpp
 // Copyright (C) 2020 Quentin Putaud
 //
 // This program is free software: you can redistribute it and/or modify
@@ -18,12 +16,11 @@
 // along with this program.  If not, see http://www.gnu.org/licenses
 //********************************************************************
 
-
 #include <fstream>
 #include <iostream>
 
-#include "../include/mnist_reader/mnist_reader.hpp"
-#include "../include/system/endianess.hpp"
+#include "mnist_reader/mnist_reader.hpp"
+#include "system/endianess.hpp"
 
 /** ----- private ----- **/
 
@@ -38,15 +35,15 @@ void MnistReader::loadData(bool testset)
 		path=&_pathToTestDataset;
 	std::ifstream file((*path).c_str(),std::ios::binary); // binary file writen in big endian
 
-	if (file.is_open())
-	{
-		unsigned int magic_number=0; //0 - 3 bytes of the file, must be 2051.
-		unsigned int number_of_images=0; // 4 - 7
-		unsigned int n_rows=0; // 8 - 11
-		unsigned int n_cols=0; // 12 - 15
-		// 16 - end -> datas
+    if (file.is_open())
+    {
+        unsigned int magic_number=0; //0 - 3 bytes of the file, must be 2051.
+        unsigned int number_of_images=0; // 4 - 7
+        unsigned int n_rows=0; // 8 - 11
+        unsigned int n_cols=0; // 12 - 15
+					  // 16 - end -> datas
 
-		file.read((char*)&magic_number,sizeof(int));
+        file.read((char*)&magic_number,sizeof(int));
 		if(cp_endianess==Endianess::LittleEndian) //not the same endianess, must reverse the int bytes by bytes
 			magic_number=changeEndianess(magic_number);
 		if(magic_number==2051) //if not, wrong or corrupted file
@@ -65,7 +62,7 @@ void MnistReader::loadData(bool testset)
 
 			if(testset)
 			{
-				_dtest=std::vector<std::vector<unsigned char>>(number_of_images,std::vector<unsigned char>(n_rows*n_cols)); // allocation of the needed memory
+                _dtest=std::vector<std::vector<unsigned char>>(number_of_images,std::vector<unsigned char>(n_rows*n_cols)); // allocation of the needed memory
 				data=&_dtest;
 			}
 			else
@@ -73,21 +70,22 @@ void MnistReader::loadData(bool testset)
 				_dtrain=std::vector<std::vector<unsigned char>>(number_of_images,std::vector<unsigned char>(n_rows*n_cols));
 				data=&_dtrain;
 			}
-			for(size_t i=0 ; i<number_of_images ; ++i) // for each images
-			{
-				for(size_t j=0 ; j<n_rows*n_cols ; ++j) // for each pixel of the images (n_rows * n_cols)
-				{
-					unsigned char temp;
-					file.read((char*)&temp,sizeof(unsigned char));
-					(*data)[i][j]=temp;
-				}
-			}
-		}
+            for(size_t i=0 ; i<number_of_images ; ++i) // for each images
+            {
+                for(size_t j=0 ; j<n_rows*n_cols ; ++j) // for each pixel of the images (n_rows * n_cols)
+                {
+                    unsigned char temp;
+                    file.read((char*)&temp,sizeof(unsigned char));
+                    (*data)[i][j]=temp;
+                }
+            }
+        }
 		else // if magic_number != 2051
 		{
 			std::cerr << "Wrong or corrupted file : " << (*path) << "\n";
 		}
-	}
+
+    }
 	else // file.is_open() retrun false
 	{
 		std::cerr << "Cannot open the file : " << (*path) << "\n";
@@ -95,7 +93,7 @@ void MnistReader::loadData(bool testset)
 	file.close();
 	_data=&_dtrain;
 	if(testset)
-	_data=&_dtest;
+        _data=&_dtest;
 }
 
 void MnistReader::loadLabel(bool testset)
@@ -110,11 +108,11 @@ void MnistReader::loadLabel(bool testset)
 
 	if(file.is_open())
 	{
-		unsigned int magic_number=0; //0 - 3 bytes of the file, must be 2049.
-		unsigned int number_of_labels=0; // 4 - 7
-		// 8 - end -> datas
+    	unsigned int magic_number=0; //0 - 3 bytes of the file, must be 2049.
+        unsigned int number_of_labels=0; // 4 - 7
+					  			// 8 - end -> datas
 
-		file.read((char*)&magic_number,sizeof(int));
+        file.read((char*)&magic_number,sizeof(int));
 		if(cp_endianess==Endianess::LittleEndian) //not the same endianess, must reverse the int bytes by bytes
 			magic_number=changeEndianess(magic_number);
 		if(magic_number==2049) //if not, wrong or corrupted file
@@ -133,19 +131,19 @@ void MnistReader::loadLabel(bool testset)
 				_ltrain=std::vector<unsigned char>(number_of_labels);
 				label=&_ltrain;
 			}
-			for(size_t i=0 ; i<number_of_labels ; ++i) // for each label
-			{
-				unsigned char temp;
-				file.read((char*)&temp,sizeof(unsigned char));
-				(*label)[i]=temp;
-			}
-		}
+            for(size_t i=0 ; i<number_of_labels ; ++i) // for each label
+            {
+                unsigned char temp;
+                file.read((char*)&temp,sizeof(unsigned char));
+                (*label)[i]=temp;
+            }
+        }
 		else // if magic_number != 2049
 		{
 			std::cerr << "Wrong or corrupted file : " << (*path) << "\n";
 		}
 
-	}
+    }
 	else // file.is_open() retrun false
 	{
 		std::cerr << "Cannot open the file : " << (*path) << "\n";
@@ -153,17 +151,17 @@ void MnistReader::loadLabel(bool testset)
 	file.close();
 	_label=&_ltrain;
 	if(testset)
-	_label=&_ltest;
+        _label=&_ltest;
 }
 
 /** ----- public ----- **/
 
 MnistReader::MnistReader(std::string pathToTrainingDataset, std::string pathToTrainingLabels, std::string pathToTestDataset, std::string pathToTestLabels, bool loadAll)
 {
-	_pathToTrainingDataset=pathToTrainingDataset;
-	_pathToTestDataset=pathToTestDataset;
-	_pathToTrainingLabels=pathToTrainingLabels;
-	_pathToTestLabels=pathToTestLabels;
+    _pathToTrainingDataset=pathToTrainingDataset;
+    _pathToTestDataset=pathToTestDataset;
+    _pathToTrainingLabels=pathToTrainingLabels;
+    _pathToTestLabels=pathToTestLabels;
 	if(loadAll)
 	{
 		load(); // load all
@@ -267,3 +265,5 @@ size_t MnistReader::getNumberOfData()
 {
 	return (*_data).size();
 }
+
+

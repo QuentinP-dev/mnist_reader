@@ -2,31 +2,54 @@
 # Distributed under the GNU General Public License version 3
 # (http://www.gnu.org/licenses)
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.8)
 
 # ------- config -------
 
 set(PROJECT_NAME mnist_reader)
+set(PROJECT_VERSION 1.0)
+set(PROJECT_BRIEF "A &nbsp; C++ &nbsp; library &nbsp; to &nbsp; read &nbsp; the &nbsp; mnist &nbsp; dataset.")
 
-set(PROJECT_TYPE_LIB true)
+#bin or library
+set(PROJECT_TYPE library)
 
-set(CPP_11_OR_HIGHER true)
+# ------- options -------
 
-set(SOURCES src/mnist_reader.cpp)
-set(HEADERS include/mnist_reader/mnist_reader.hpp include/system/endianess.hpp)
+option(SHARED_LIBRARY "Type of the output library, shared if set to yes, static if not." OFF)
+
+option(BUILD_DOCS "Build documentation" OFF)
+
+option(BUILD_EXAMPLE "Build example" OFF)
 
 # ----------------------
 
-project(${PROJECT_NAME} CXX)
+message(${PROJECT_NAME} " building configuration start with the options :" )
+if(PROJECT_TYPE STREQUAL "library")
+	message("SHARED_LIBRARY : " ${SHARED_LIBRARY})
+endif()
+message("BUILD_DOCS : " ${BUILD_DOCS})
+message("BUILD_EXAMPLE : " ${BUILD_EXAMPLE})
+message("You can change this using the -D option of cmake\n")
 
-if(PROJECT_TYPE_LIB)
-	add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-else()
-	add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+# ----------------------
+
+project(${PROJECT_NAME} VERSION ${PROJECT_VERSION})
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+add_subdirectory(src)
+
+# ----------------------
+
+if (BUILD_DOCS)
+    find_package(Doxygen)
 endif()
 
-if(CPP_11_OR_HIGHER)
-	target_compile_features(${PROJECT_NAME} PUBLIC cxx_nullptr)
+if (DOXYGEN_FOUND AND BUILD_DOCS)
+    add_subdirectory(docs)
 endif()
 
+if (BUILD_EXAMPLE)
+    add_subdirectory (example)
+endif()
 

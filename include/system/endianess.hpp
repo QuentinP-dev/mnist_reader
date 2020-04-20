@@ -19,13 +19,27 @@
 //********************************************************************
 
 
+/*!
+*\file endianess.hpp
+*\author Quentin Putaud
+*\version 1.0
+*\date 20/04/2020
+*/
+
 #ifndef ENDIANESS_HPP_INCLUDED
 #define ENDIANESS_HPP_INCLUDED
 
-/** little endian or big endian **/
+/*!
+*\enum Endianess
+*\brief An enum class to handle the types of endianess.
+*Possible values are Endianess::LittleEndian of Endianess::BigEndian.
+*/
 enum class Endianess {LittleEndian,BigEndian};
 
-/** find the endianess of the computer and return it using the Endianess enum class**/
+/*!
+*\brief Find and return the endianess of the computer.
+*\return Endianess : the endianess of the computer.
+*/
 Endianess getComputerEndianess()
 {
     //create the short 11110000 in little endian and the short 00001111 in big endian
@@ -37,7 +51,11 @@ Endianess getComputerEndianess()
     return Endianess::LittleEndian;
 }
 
-/** change a numeric variable to the opposit endianess **/
+/*!
+*\brief Change variable var to the opposit endianess.
+*\param[in] var T : input variable.
+*\return T : the variable var in the opposit endianess.
+*/
 template<typename T>
 T changeEndianess(T var)
 {
@@ -53,5 +71,6 @@ T changeEndianess(T var)
     }
     return uvar._full;
 }
+
 
 #endif // ENDIANESS_HPP_INCLUDED

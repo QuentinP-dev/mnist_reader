@@ -24,28 +24,40 @@ You can used the mnist_reader library in two different ways.
 
 Put the [include](/include) and the [src](/src) folders in your project folder.
 
-And add [src/mnist_reader.cpp](/src/mnist_reader.cpp) at the list of sources you give to your compiler.
+Include the [mnist_reader.hpp](/include/mnist_reader/mnist_reader.hpp) header in your source code.
 
-##### b. Compile and link the libmnist_reader.a static library
+And add the [mnist_reader.cpp](/src/mnist_reader.cpp) file to the list of sources you give to your compiler.
 
-Use the CMakeList.txt to create the libmnist_reader.a library :
+##### b. Compile the mnist_reader library
 
-*(example for a Unix system)*
+Use the [CMakeLists.txt](/CMakeLists.txt) in root to create the mnist_reader library :
+
+*(example for a Linux system)*
 ```
-cmake -G Unix\ Makefiles
+cmake CMakeLists.txt -G Unix\ Makefiles -B build/
+cd build/
 make
 ```
-Put the created library in your project folder.
+The output library will be in build/src/
 
-And add libmnist_reader.a at the list of sources you give to your compiler.
+You can pass option to the cmake command using -D (see man cmake)
+
+Option | meaning | default value
+------ | ------- | -------------
+SHARED_LIBRARY | If ON, the output is a shared library | OFF
+BUILD_DOCS | Build the documentation using doxygen | OFF
+BUILD_EXAMPLE | Build a little example | OFF
+
+Include the [mnist_reader.hpp](/include/mnist_reader/mnist_reader.hpp) header in your source code.
+
+Pass the created library to your compiler.
+
+*(example for a g++)*
+```
+g++ my_source_file.cpp -L path/to/lib/ -lmnist_reader
+```
 
 #### 3. In your code
-
-Include the library with :
-
-```c++
-#include "include/mnist_reader/mnist_reader.hpp"
-```
 
 Then you can simply load the database with :
 ```c++

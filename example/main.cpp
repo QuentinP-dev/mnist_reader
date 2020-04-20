@@ -2,7 +2,7 @@
 #include <ctime>
 #include <iostream>
 
-#include "../include/mnist_reader/mnist_reader.hpp"
+#include "mnist_reader/mnist_reader.hpp"
 
 int main()
 {
