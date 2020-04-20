@@ -8,9 +8,9 @@ Download the database at : http://yann.lecun.com/exdb/mnist/
 
 ## How to use it
 
-#### 1. Download the repositorie
+#### 1. Download the repository
 
-Download the repositorie with your browser or with git using :
+Download the repository with your browser or with git using :
 
 ```
 git clone https://github.com/QuentinP-dev/mnist_reader.git
