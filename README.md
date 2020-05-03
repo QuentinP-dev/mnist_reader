@@ -68,7 +68,7 @@ And use it with :
 ```c++
 reader.getData(n_data,n_pixel);
 ```
-To get the n_pixel pixel of the n_data data of the database.
+To get the *n_pixel* pixel of the n_data data of the database.
 
 You can see other examples of use in the [examples](examples/) section.
 
@@ -78,7 +78,7 @@ Since the bytes in the Mnist database are writen in big endian, the mnist_reader
 
 ## Contact
 
-If you find any bugs or issues using the code, feel free to send me an email at :
+If you find any bugs or issues using this code, please feel free to send me an email at :
 quentinp.dev@gmail.com
 
 ## Licence
