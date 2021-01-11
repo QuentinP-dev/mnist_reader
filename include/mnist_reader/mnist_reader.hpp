@@ -23,14 +23,43 @@
 /*!
 *\file mnist_reader.hpp
 *\author Quentin Putaud
-*\version 1.0
-*\date 20/04/2020
+*\version 1.1
+*\date 18/12/2020
 */
 
 #ifndef MNIST_READER_HPP_INCLUDED
 #define MNIST_READER_HPP_INCLUDED
 
+/*!
+*\def MNIST_READER_STATIC_CLASS
+*\Define MNIST_READER_SATIC_CLASS at compilation time to use the MnistReader class as a static class.
+*/
+#ifdef MNIST_READER_STATIC_CLASS
+	#define STATIC static
+	#define CONST
+	#define VIRTUAL
+#else
+	#define STATIC
+	#define CONST const
+
+	/*!
+	*\def MNIST_READER_SUPER_CLASS
+	*\Define MNIST_READER_SUPER_CLASS at compilation time to use the MnistReader class as a super class.
+	*/
+	#ifdef MNIST_READER_SUPER_CLASS
+		#define VIRTUAL virtual
+	#else
+		#define VIRTUAL
+	#endif
+#endif
+
 #include <vector>
+
+/*!
+*\namespace qplib Namespace of my personal lib
+*/
+namespace qplib
+{
 
 /*!
 *\class MnistReader mnist_reader.hpp "mnist_reader.hpp"
@@ -38,37 +67,46 @@
 */
 class MnistReader
 {
-private:
+protected:
 
     /**paths to the label and data files **/
-	std::string _pathToTestDataset;
-	std::string _pathToTrainingDataset;
-	std::string _pathToTestLabels;
-	std::string _pathToTrainingLabels;
+	STATIC std::string _pathToTestDataset;
+	STATIC std::string _pathToTrainingDataset;
+	STATIC std::string _pathToTestLabels;
+	STATIC std::string _pathToTrainingLabels;
 
     /** the 2 dataset **/
-	std::vector<std::vector<unsigned char>> _dtrain, _dtest;
+	STATIC std::vector<std::vector<uint8_t>> _dtrain, _dtest;
 
 	/** the 2 labelset **/
-	std::vector<unsigned char> _ltrain,_ltest;
+	STATIC std::vector<uint8_t> _ltrain,_ltest;
 
 	/** current dataset **/
-	std::vector<std::vector<unsigned char>> *_data=nullptr; // set to training set by default at initialisation
+	STATIC std::vector<std::vector<uint8_t>>* _data;
 
 	/** current labelset **/
-	std::vector<unsigned char> *_label=nullptr; // set to training set by default at initialisation
+	STATIC std::vector<uint8_t>* _label;
 
 	/** private loading function used by public ones **/
-	void loadData(bool testset);
+	STATIC void loadData(bool testset);
 
-	void loadLabel(bool testset);
+	STATIC void loadLabel(bool testset);
+
+	#ifdef MNIST_READER_STATIC_CLASS
+	/*!
+	*\brief Virtual pure destructor : instantiation disabled
+	*/
+	virtual ~MnistReader()=0;
+	#endif
 
 public:
+
+	#ifndef MNIST_READER_STATIC_CLASS
 
 	/*!
 	*\brief Default constructor.
 	*/
-	MnistReader(){};
+	MnistReader(void){};
 
 	/*!
 	*\brief Constructor with all paths to the mnist database files.
@@ -83,126 +121,156 @@ public:
                 std::string pathToTestDataset,
                 std::string pathToTestLabels, bool loadAll=false);
 
+	#endif
+
+	#ifdef MNIST_READER_SUPER_CLASS
+	/*!
+	*\brief Virtual destructor
+	*/
+	virtual ~MnistReader(){};
+	#endif
+
 	/*!
 	*\brief Load all the database files.
 	*\return void
 	*/
-	void load();
+	VIRTUAL STATIC void load(void);
 
 	/*!
 	*\brief Load the training dataset file.
 	*\return void
 	*/
-	void loadTrainingDataset();
+	VIRTUAL STATIC void loadTrainingDataset(void);
 
 	/*!
 	*\brief Load the test dataset file.
 	*\return void
 	*/
-	void loadTestDataset();
+	VIRTUAL STATIC void loadTestDataset(void);
 
 	/*!
 	*\brief Load the training labels file.
 	*\return void
 	*/
-	void loadTrainingLabels();
+	VIRTUAL STATIC void loadTrainingLabels(void);
 
 	/*!
 	*\brief Load the test labels file.
 	*\return void
 	*/
-	void loadTestLabels();
+	VIRTUAL STATIC  void loadTestLabels(void);
 
 	/*!
 	*\brief Set the using dataset to the training dataset.
 	*\return void
 	*/
-	void useTrainingDataset();
-	
+	VIRTUAL STATIC void useTrainingDataset(void);
+
 	/*!
 	*\brief Set the using dataset to the test dataset.
 	*\return void
 	*/
-	void useTestDataset();
+	VIRTUAL STATIC void useTestDataset(void);
 
 	/*!
 	*\brief Set the path to the test dataset file.
 	*\param[in] path std::string : path to the test dataset file.
 	*\return void
 	*/
-	void setPathToTestDataset(std::string path);
-	
+	VIRTUAL STATIC void setPathToTestDataset(std::string path);
+
 	/*!
 	*\brief Set the path to the training dataset file.
 	*\param[in] path std::string : path to the training dataset file.
 	*\return void
 	*/
-	void setPathToTrainingDataset(std::string path);
-	
+	VIRTUAL STATIC void setPathToTrainingDataset(std::string path);
+
 	/*!
 	*\brief Set the path to the test labels file.
 	*\param[in] path std::string : path to the test labels file.
 	*\return void
 	*/
-	void setPathToTestlabels(std::string path);
-	
+	VIRTUAL STATIC void setPathToTestLabels(std::string path);
+
 	/*!
 	*\brief Set the path to the training labels file.
 	*\param[in] path std::string : path to the training labels file.
 	*\return void
 	*/
-	void setPathToTrainingLabels(std::string path);
+	VIRTUAL STATIC void setPathToTrainingLabels(std::string path);
 
 	/*!
-	*\brief Return the i image of the used dataset with all its values normalized between 0 and 1.
-	*\param[in] i size_t : the index of the image.
-	*\return std::vector<double> : the normalized image at the index i.
+	*\brief Return the id_image image of the used dataset with all its values normalized between 0 and 1.
+	*\param[in] id_image size_t : the index of the image.
+	*\return std::vector<double> : the normalized image at the index id_image.
 	*/
-	std::vector<double> getImageNormalized(size_t i);
+	VIRTUAL STATIC std::vector<double> getImageNormalized(size_t id_image) CONST;
 
 	/*!
-	*\brief Return the j pixel of the i image of the used dataset.
+	*\brief Return the i pixel of the id_image image of the used dataset.
 	*The pixel is normalized between 0 and 1.
-	*\param[in] i size_t : the index of the image.
-	*\param[in] j size_t : the index of the pixel.
-	*\return double : the normalized pixel at the index j of the image at the index i.
+	*\param[in] id_image size_t : the index of the image.
+	*\param[in] i size_t : the index of the pixel.
+	*\return double : the normalized pixel at the index i of the image at the index id_image.
 	*/
-	double getDataNormalized(size_t i,size_t j);
+	VIRTUAL STATIC double getDataNormalized(size_t id_image,size_t i) CONST;
 
 	/*!
-	*\brief Return the i image of the used dataset.
-	*\param[in] i size_t : the index of the image.
-	*\return std::vector<unsigned char> : the image at the index i.
+	*\brief Return the [i,j] pixel of the id_image image of the used dataset.
+	*The pixel is normalized between 0 and 1.
+	*\param[in] id_image size_t : the index of the image.
+	*\param[in] i uint8_t : the index of the colum's pixel.
+	*\param[in] j uint8_t : the index of the line's pixel.
+	*\return double : the normalized pixel at the index [i,j] of the image at the index id_image.
 	*/
-	std::vector<unsigned char> getImage(size_t i);
+	VIRTUAL STATIC double getDataNormalized(size_t id_image,uint8_t i,uint8_t j) CONST;
 
 	/*!
-	*\brief Return the j pixel of the i image of the used dataset.
-	*\param[in] i size_t : the index of the image.
-	*\param[in] j size_t : the index of the pixel.
-	*\return unsigned char : the pixel at the index j of the image at the index i.
+	*\brief Return the id_image image of the used dataset.
+	*\param[in] id_image size_t : the index of the image.
+	*\return std::vector<uint8_t> : the image at the index id_image.
 	*/
-	unsigned char getData(size_t i,size_t j);
+	VIRTUAL STATIC std::vector<uint8_t> getImage(size_t id_image) CONST;
+
+	/*!
+	*\brief Return the i pixel of the id_image image of the used dataset.
+	*\param[in] id_image size_t : the index of the image.
+	*\param[in] i size_t : the index of the pixel.
+	*\return uint8_t : the pixel at the index i of the image at the index id_image.
+	*/
+	VIRTUAL STATIC uint8_t getData(size_t id_image,size_t i) CONST;
+
+	/*!
+	*\brief Return the [i,j] pixel of the id_image image of the used dataset.
+	*\param[in] id_image size_t : the index of the image.
+	*\param[in] i uint8_t : the index of the colum's pixel.
+	*\param[in] j uint8_t : the index of the line's pixel.
+	*\return uint8_t : the pixel at the index [i,j] of the image at the index id_image.
+	*/
+	VIRTUAL STATIC uint8_t getData(size_t id_image,uint8_t i,uint8_t j) CONST;
 
 	/*!
 	*\brief Return the i label of the used dataset.
 	*\param[in] i size_t : the index of the label.
-	*\return char : the label at the index i.
+	*\return uint8_t : the label at the index i.
 	*/
-	char getLabel(size_t i);
+	VIRTUAL STATIC uint8_t getLabel(size_t i) CONST;
 
 	/*!
 	*\brief Return the size of images in the dataset.
 	*\return size_t : size of images.
 	*/
-	size_t getDataSize();
+	VIRTUAL STATIC size_t getDataSize(void) CONST;
 
 	/*!
 	*\brief Return number of image in the used dataset.
 	*\return size_t : number of image.
 	*/
-	size_t getNumberOfData();
+	VIRTUAL STATIC size_t getNumberOfData(void) CONST;
 };
+
+} // end namespace
 
 
 #endif // MNIST_READER_HPP_INCLUDED
