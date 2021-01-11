@@ -33,9 +33,9 @@ if(PROJECT_TYPE STREQUAL "LIBRARY")
 	else()
 		install(TARGETS ${PROJECT_NAME} DESTINATION "bin/${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR}")
 	endif()
-	
-	
-	
+
+
+
 # ------------ binary configuration -------------
 
 else()
@@ -45,10 +45,6 @@ else()
 
 # ------- installing binary -------
 	install(TARGETS ${PROJECT_NAME} DESTINATION "bin/${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR}")
-endif()
-
-if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/index.html" DESTINATION "doc")
 endif()
 
 # -----------------------------------------------
